@@ -23,6 +23,18 @@ function prepareRepo(path) {
   })
 }
 
+function pushChanges() {
+  return new Promise((resolve, reject) => {
+    if (process.env.NODE_ENV === 'production') {
+      exec(`git -C ${gitRepoPath} push -u origin master`, (error, stdout, stderr) => {
+        (!error) ? resolve(gitRepoPath) : reject(stderr)
+      })
+    } else {
+      resolve(gitRepoPath)
+    }
+  })
+}
+
 const update = () => {
   return new Promise((resolve, reject) => {
     prepareRepo(gitRepoPath).then(() => {
@@ -36,10 +48,7 @@ const update = () => {
 
           exec(`git -C ${gitRepoPath} commit -a -m "${commitMessage}"`, (error, stdout, stderr) => {
             if (error) reject(stderr)
-
-            exec(`git -C ${gitRepoPath} push -u origin master`, (error, stdout, stderr) => {
-              (!error) ? resolve(gitRepoPath) : reject(stderr)
-            })
+            pushChanges().then(() => { resolve() }).catch((pushError) => { reject(pushError) })
           })
         })
       })
@@ -58,10 +67,7 @@ const revert = () => {
         if (stdout.replace(/(\r\n\t|\n|\r\t)/gm,"") === commitMessage) {
           exec(`git -C ${gitRepoPath} revert HEAD`, (error, stdout, stderr) => {
             if (error) reject(stderr)
-
-            exec(`git -C ${gitRepoPath} push -u origin master`, (error, stdout, stderr) => {
-              (!error) ? resolve(gitRepoPath) : reject(stderr)
-            })
+            pushChanges().then(() => { resolve() }).catch((pushError) => { reject(pushError) })
           })
         } else {
           reject('Last commit was not commited by the update bot. Can not revert.')
