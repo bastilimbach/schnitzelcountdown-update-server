@@ -1,8 +1,9 @@
+const path = require('path')
 const fs = require('fs')
 const { exec } = require('child_process')
 const gitRepoURL = 'https://github.com/bastilimbach/wanngabesdasletztemalschnitzel.de.git'
-const gitRepoPath = './countdown'
-const indexHTML = `${gitRepoPath}/index.html`
+const gitRepoPath = path.join(__dirname, 'countdown')
+const indexHTML = path.join(gitRepoPath, 'index.html')
 const commitMessage = '[Bot] :tada: Update lastDateOfSchnitzel'
 
 function prepareRepo(path) {
