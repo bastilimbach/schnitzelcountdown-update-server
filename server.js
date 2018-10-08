@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config()
 const { update, revert } = require('./index')
 const app = express()
+const port = process.env.NODE_PORT || 3000
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use((req, res, next) => {
@@ -47,6 +48,6 @@ app.post('/', (req, res) => {
   }
 })
 
-const listener = app.listen(3000, () => {
+const listener = app.listen(port, () => {
   console.log('Server listening on port', listener.address().port)
 })
