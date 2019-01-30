@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const dotenv = require('dotenv').config()
 const { update, revert } = require('./index')
 const app = express()
 const port = process.env.NODE_PORT || 3000
