@@ -1,13 +1,14 @@
 const path = require('path')
 const fs = require('fs')
 const { exec } = require('child_process')
-const gitRepoURL = 'git@github.com:bastilimbach/wanngabesdasletztemalschnitzel.de.git'
+const gitRepoURL = process.env.REPOSITORY_URL
 const gitRepoPath = path.join(__dirname, 'countdown')
 const indexHTML = path.join(gitRepoPath, 'index.html')
 const commitMessage = '[Bot] :tada: Update lastDateOfSchnitzel'
 
 function prepareRepo(path) {
   return new Promise((resolve, reject) => {
+    if (!gitRepoURL) reject(new Error(`Environment variable 'REPOSITORY_URL' isn't set.`))
     if (fs.existsSync(path)) {
       exec(`git -C ${path} reset --hard origin/HEAD`, (error, stdout, stderr) => {
         if (error) reject(stderr)
