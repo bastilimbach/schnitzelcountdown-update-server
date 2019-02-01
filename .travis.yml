@@ -9,6 +9,6 @@ script:
 after_success:
   - >
     if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-      docker login -u="$DOCKER_USER" -p="$DOCKER_PASS" $DOCKER_REGISTRY
+      echo "$DOCKER_PASS" | docker login -u="$DOCKER_USER" --password-stdin $DOCKER_REGISTRY
       docker push $DOCKER_REGISTRY/schnitzelcountdown-update-server:latest
     fi
