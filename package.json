@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "start:dev": "nodemon --inspect server.js"
+    "start:dev": "nodemon --inspect server.js",
+    "test": "echo 'No tests available.'"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
