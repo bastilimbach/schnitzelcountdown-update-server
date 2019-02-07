@@ -11,8 +11,11 @@ action "Only on master" {
 action "Build image" {
   uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff"
   needs = ["Only on master"]
-  args = "build --build-arg GITHUB_DEPLOY_KEY=\"$GITHUB_TOKEN\" -t $DOCKER_REGISTRY_URL/schnitzelcountdown-update-server:latest ."
-  secrets = ["GITHUB_TOKEN", "DOCKER_REGISTRY_URL"]
+  args = "build --build-arg GITHUB_DEPLOY_KEY=\"$DEPLOY_KEY\" -t $DOCKER_REGISTRY_URL/schnitzelcountdown-update-server:latest ."
+  secrets = [
+    "DOCKER_REGISTRY_URL",
+    "DEPLOY_KEY",
+  ]
 }
 
 action "Docker Registry login" {
