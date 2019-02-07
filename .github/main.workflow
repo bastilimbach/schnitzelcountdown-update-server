@@ -24,6 +24,6 @@ action "Docker Registry login" {
 action "Push image" {
   uses = "actions/docker/cli@aea64bb1b97c42fa69b90523667fef56b90d7cff"
   needs = ["Docker Registry login"]
-  args = "docker push $DOCKER_REGISTRY_URL/schnitzelcountdown-update-server:latest"
+  args = "push $DOCKER_REGISTRY_URL/schnitzelcountdown-update-server:latest"
   secrets = ["DOCKER_REGISTRY_URL"]
 }
